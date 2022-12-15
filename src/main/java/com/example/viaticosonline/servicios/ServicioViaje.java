@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ServicioViaje implements ServicioBase<Viaje>{
+public class ServicioViaje implements ServicioBase<Viaje> {
 
     @Autowired
     RepositorioViaje repositorioViaje;
@@ -22,7 +22,7 @@ public class ServicioViaje implements ServicioBase<Viaje>{
             List<Viaje> viajes = repositorioViaje.findAll();
             return viajes;
 
-        }catch(Exception error){
+        } catch (Exception error) {
 
             throw new Exception(error.getMessage());
 
@@ -32,12 +32,12 @@ public class ServicioViaje implements ServicioBase<Viaje>{
     @Override
     public Viaje buscarPorId(Integer id) throws Exception {
 
-        try{
+        try {
 
-           Optional<Viaje> viajeBuscado= repositorioViaje.findById(id);
-           return viajeBuscado.get();
+            Optional<Viaje> viajeBuscado = repositorioViaje.findById(id);
+            return viajeBuscado.get();
 
-        }catch(Exception error){
+        } catch (Exception error) {
 
             throw new Exception(error.getMessage());
 
@@ -47,18 +47,25 @@ public class ServicioViaje implements ServicioBase<Viaje>{
 
     @Override
     public Viaje registrar(Viaje entidad) throws Exception {
-        try{
+        try {
 
-            entidad=repositorioViaje.save(entidad);
+            entidad = repositorioViaje.save(entidad);
             return entidad;
 
-        }catch(Exception error){
+        } catch (Exception error) {
             throw new Exception(error.getMessage());
         }
     }
 
     @Override
     public Viaje editar(Integer id, Viaje entidad) throws Exception {
-        return null;
+        try {
+            Optional<Viaje> viajeBuscado = repositorioViaje.findById(id);
+            entidad = repositorioViaje.save(entidad);
+            return entidad;
+
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
     }
 }
